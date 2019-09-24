@@ -2,7 +2,6 @@ import os
 import json
 
 from django.views.generic import View
-from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 
 from common.res import res
@@ -13,6 +12,7 @@ from dbmysql.models.Folder import Folder
 from dbmysql.models.File import File
 
 class FolderRename(View):
+
     # 递归的修改子文件和子文件夹url
     def getprante(self, folder_id, folder_url):
         # 查询该目录下的所有子文件
@@ -45,7 +45,7 @@ class FolderRename(View):
 
         folder = Folder.objects.filter(id=folder_id).first()
         if folder is None:
-            raise Exception(u'该文件不存在')
+            raise Exception(u"该文件不存在")
 
         # 实际文件
         # 该文件夹地址
@@ -70,5 +70,4 @@ class FolderRename(View):
             'path_parent': path_parent,
             'path_new': path_new,
         }
-        return res(action='rename')
-        # return JsonResponse(data)
+        return res(action='rename', data=data)
